@@ -7,6 +7,8 @@ Make it look like the same as Facebook with animation
 - railVisible
 - borderRadius
 - railBorderRadius
+
+
 ###And added a new one:
 - railSize: width in pixels of the scrollbar rail, make sure this value is greater than scrollbar size so the animation effect will work.
 
