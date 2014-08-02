@@ -1,4 +1,4 @@
-Make it look like the same as Facebook with animation
+SlimScroll akin to Facebook with resize animation
 =================================
 
 ###This version had removed 5 original options:
