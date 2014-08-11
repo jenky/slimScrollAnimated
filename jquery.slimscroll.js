@@ -268,7 +268,12 @@
                     });
 
                     // rail animation
-                    rail.bind('click', function (e) {  
+                    rail.bind('click', function (e) {
+
+                        if (bar.is(":hover")) {
+                            return;
+                        }
+
                         var pageY = e.pageY,
                             t = parseFloat(bar.css('top'));
                         if (pageY < t) {
@@ -309,12 +314,20 @@
 
                 // show on parent mouseover
                 me.hover(function () {
-                    isOverPanel = true;
                     showBar();
+                    isOverPanel = true;                    
                     hideBar();
                 }, function () {
                     isOverPanel = false;
                     hideBar();
+                }).on('mousemove', function (e) {
+                    if( isNear( rail, 20, e ) ) {
+                        isOverBar = true;
+                        showBar();
+                    } else {
+                        isOverBar = false;
+                        hideBar();
+                    };
                 });
 
                 // on gripper hover
@@ -555,6 +568,19 @@
                     var rgb = hexToRgb(color);
                     return rgb ? 'rgba(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ', ' + opacity + ')' : color.replace('rgb', 'rgba').replace(')', ', ' + opacity + ')');
                 }
+
+                function isNear( element, distance, event ) {
+
+                    var left = element.offset().left - distance,
+                        top = element.offset().top - distance,
+                        right = left + element.width() + 2*distance,
+                        bottom = top + element.height() + 2*distance,
+                        x = event.pageX,
+                        y = event.pageY;
+
+                    return ( x > left && x < right && y > top && y < bottom );
+
+                };
 
             });
 
