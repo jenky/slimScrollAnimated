@@ -9,7 +9,7 @@
  */
 (function ($) {
 
-    jQuery.fn.extend({
+    $.fn.extend({
         slimScroll: function (options) {
 
             var defaults = {
@@ -265,6 +265,25 @@
                         e.stopPropagation();
                         e.preventDefault();
                         return false;
+                    });
+
+                    // rail animation
+                    rail.bind('click', function (e) {  
+                        var pageY = e.pageY,
+                            t = parseFloat(bar.css('top'));
+                        if (pageY < t) {
+                            currTop = t - bar.height();
+                        } else {
+                            currTop = t + bar.height();
+                        }
+                        /*if (currTop > e.pageY) {
+                            return;
+                        }*/
+                        //bar.css('top', currTop);                        
+                        //scrollContent(0, bar.position().top, false); // scroll content
+                        bar.animate({'top': currTop}, 'fast', function() {
+                            scrollContent(0, bar.position().top, false); // scroll content
+                        });
                     });
                 }
 
@@ -544,8 +563,8 @@
         }
     });
 
-    jQuery.fn.extend({
-        slimscroll: jQuery.fn.slimScroll
+    $.fn.extend({
+        slimscroll: $.fn.slimScroll
     });
 
 })(jQuery);
