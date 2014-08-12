@@ -267,7 +267,7 @@
                         return false;
                     });
 
-                    // rail animation
+                    // click on rail to scroll content
                     rail.bind('click', function (e) {
 
                         if (bar.is(":hover")) {
@@ -281,11 +281,7 @@
                         } else {
                             currTop = t + bar.height();
                         }
-                        /*if (currTop > e.pageY) {
-                            return;
-                        }*/
-                        //bar.css('top', currTop);                        
-                        //scrollContent(0, bar.position().top, false); // scroll content
+
                         bar.animate({'top': currTop}, 'fast', function() {
                             scrollContent(0, bar.position().top, false); // scroll content
                         });
@@ -313,9 +309,9 @@
                 });
 
                 // show on parent mouseover
-                me.hover(function () {
+                me.hover(function () {                    
+                    isOverPanel = true;
                     showBar();
-                    isOverPanel = true;                    
                     hideBar();
                 }, function () {
                     isOverPanel = false;
