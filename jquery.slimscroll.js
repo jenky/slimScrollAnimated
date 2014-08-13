@@ -210,18 +210,6 @@
                         //zIndex: 99
                     });
 
-                var gripper = $(divS)
-                    .addClass('slimScrollGripper')
-                    .css({
-                        position: 'absolute',
-                        top: 0,
-                        width: '10%',
-                        height: '100%',
-                        opacity: 0,
-                        overflow: 'hidden',
-                        zIndex: -10
-                    });
-
                 // set position
                 var posCss = (o.position == 'right') ? {
                     right: o.distance
@@ -236,10 +224,11 @@
                 me.wrap(wrapper);
 
                 // append to parent div
-                me.parent().append(gripper);
                 //me.parent().append(bar);
                 me.parent().append(rail);
                 rail.append(bar);
+
+                hideBar();
 
                 // make it draggable and no longer dependent on the jqueryUI
                 if (o.railDraggable) {
@@ -324,13 +313,6 @@
                         isOverBar = false;
                         hideBar();
                     };
-                });
-
-                // on gripper hover
-                gripper.hover(function () {
-                    showBar();
-                }, function () {
-                    hideBar();
                 });
 
                 // support for mobile
