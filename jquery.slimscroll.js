@@ -263,8 +263,10 @@
                             return;
                         }
 
-                        var pageY = e.pageY,
+                        var offset = $(this).offset(),
+                            pageY = e.pageY - offset.top,
                             t = parseFloat(bar.css('top'));
+
                         if (pageY < t) {
                             currTop = t - bar.height();
                         } else {
@@ -306,7 +308,7 @@
                     isOverPanel = false;
                     hideBar();
                 }).on('mousemove', function (e) {
-                    if( isNear( rail, 20, e ) ) {
+                    if (isNear(rail, 20, e)) {
                         isOverBar = true;
                         showBar();
                     } else {
