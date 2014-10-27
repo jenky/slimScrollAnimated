@@ -2,7 +2,7 @@
  * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)
  * and GPL (http://www.opensource.org/licenses/gpl-license.php) licenses.
  *
- * Version: 1.3.2
+ * Version: 1.3.3
  * 
  * Modified by Milano
  *
@@ -149,7 +149,7 @@
                 }
 
                 // optionally set height to the parent's height
-                o.height = (options.height == 'auto') ? me.parent().height() : options.height;
+                o.height = (o.height == 'auto') ? me.parent().height() : o.height;
 
                 // wrap content
                 var wrapper = $(divS)
