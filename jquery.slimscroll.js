@@ -2,8 +2,10 @@
  * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)
  * and GPL (http://www.opensource.org/licenses/gpl-license.php) licenses.
  *
- * Version: 1.3.3
+ * Original Version: 1.3.3
  * 
+ * Version: 1.1.0
+ *
  * Modified by Milano
  *
  */
@@ -170,7 +172,7 @@
 
                 // common css
                 addCss(railClass + ', ' + barClass + ' {position: absolute; top: 0;cursor: pointer;transition: width 250ms;-webkit-transition: width 250ms;-moz-transition: width 250ms;-o-transition: width 250ms;}');
-                addCss(barClassHover + ', ' + railClassHover + ' ' + barClass + ' {width: ' + o.railSize + ';opacity: 1}');
+                addCss(barClassHover + ', ' + barClass + '.slimScrollHover, ' + railClassHover + ' ' + barClass + ' {width: ' + o.railSize + ';opacity: 1}');
                 addCss(railClass + ' {width: ' + o.railSize + ';height: 100%;z-index: 90;}');
                 addCss(barClass + ' {width: ' + o.size + ';z-index: 99;}');
                 addCss('.' + railClassOver + ' {opacity: 1;background: ' + getColor(o.railColor, o.railOpacity) + '}');
@@ -285,9 +287,11 @@
                     showBar();
                     rail.stop(true, true).addClass(railClassOver);
                 }, function () {
-                    isOverBar = false;
-                    hideBar();
-                    rail.stop(true, true).removeClass(railClassOver);
+                    if (!isDragg) {
+                        isOverBar = false;
+                        hideBar();
+                        rail.stop(true, true).removeClass(railClassOver);
+                    }
                 });
 
                 // on bar over
@@ -354,9 +358,9 @@
                     scrollContent($(o.start).position().top, null, true);
 
                     // make sure bar stays hidden
-                    if (!o.alwaysVisible) {
+                    // if (!o.alwaysVisible) {
                         bar.hide();
-                    }
+                    // }
                 }
 
                 // attach scroll events
@@ -364,9 +368,9 @@
 
                 function _onWheel(e) {
                     // use mouse wheel only when mouse is over
-                    if (!isOverPanel) {
-                        return;
-                    }
+                    // if (!isOverPanel) {
+                    //     return;
+                    // }
 
                     var e = e || window.event;
 
@@ -466,7 +470,7 @@
                     bar.css({opacity: opacity});
                 }
 
-                function showBar() {
+                function showBar(fakeScroll) {
                     // recalculate bar height
                     getBarHeight();
                     clearTimeout(queueHide);
@@ -494,6 +498,10 @@
                     }
                     /*bar.stop(true,true).animate({opacity: 1}, 'fast').addClass('slimScrollHover');//.fadeIn('fast')
                     if (o.railVisible) { rail.stop(true,true).animate({opacity: 1}, 'fast').addClass('slimScrollHover');/*fadeIn('fast') }*/
+                    if (isDragg) {
+                        bar.addClass('slimScrollHover');
+                    }
+
                     rail.stop(true, true).animate({
                         visibility: 'visible',
                         opacity: 1
@@ -502,19 +510,20 @@
 
                 function hideBar() {
                     // only hide when options allow it
-                    if (!o.alwaysVisible) {
+                    // if (!o.alwaysVisible) {
                         queueHide = setTimeout(function () {
-                            if (!(o.disableFadeOut && isOverPanel) && !isOverBar && !isDragg) {
+                            if (/*!(o.disableFadeOut && isOverPanel) && */!isOverBar && !isDragg) {
                                 //bar.fadeOut('slow').removeClass('slimScrollHover');
                                 //rail.fadeOut('slow').removeClass('slimScrollHover');
                                 //bar.animate({opacity: 0}, 'slow').removeClass('slimScrollHover');
+                                bar.removeClass('slimScrollHover');
                                 rail.animate({
                                     visibility: 'hidden',
                                     opacity: 0
-                                }, 'slow').removeClass('slimScrollHover');
+                                }, 500).removeClass(railClassOver);
                             }
-                        }, 1000);
-                    }
+                        }, 800);
+                    // }
                 }
 
                 function addCss(css) {
